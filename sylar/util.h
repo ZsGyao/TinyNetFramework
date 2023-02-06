@@ -14,13 +14,9 @@
 
 namespace sylar{
 
-    pid_t GetThreadId(){
-        return syscall(SYS_gettid);
-    }
+    pid_t GetThreadId();
 
-    uint32_t GetFiberId(){
-        return 0;
-    }
+    uint32_t GetFiberId();
 
 }
 
