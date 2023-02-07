@@ -736,7 +736,6 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: \
  /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
  /usr/include/x86_64-linux-gnu/bits/syscall.h \
  /home/zgys/workspace/sylar/tests/../sylar/singleton.h \
- /home/zgys/workspace/sylar/tests/../sylar/log.h \
  /usr/local/include/yaml-cpp/yaml.h /usr/local/include/yaml-cpp/parser.h \
  /usr/local/include/yaml-cpp/dll.h /usr/local/include/yaml-cpp/emitter.h \
  /usr/local/include/yaml-cpp/binary.h \
@@ -780,4 +779,5 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: \
  /usr/include/c++/11/bits/indirect_array.h \
  /usr/local/include/yaml-cpp/node/detail/impl.h \
  /usr/local/include/yaml-cpp/node/parse.h \
- /usr/local/include/yaml-cpp/node/emit.h
+ /usr/local/include/yaml-cpp/node/emit.h \
+ /home/zgys/workspace/sylar/tests/../sylar/log.h

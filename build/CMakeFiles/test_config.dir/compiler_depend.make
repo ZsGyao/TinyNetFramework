@@ -833,7 +833,6 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: ../tests/test_config.cc \
   /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
   /usr/include/x86_64-linux-gnu/bits/syscall.h \
   ../sylar/singleton.h \
-  ../sylar/log.h \
   /usr/local/include/yaml-cpp/yaml.h \
   /usr/local/include/yaml-cpp/parser.h \
   /usr/local/include/yaml-cpp/dll.h \
@@ -883,7 +882,8 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: ../tests/test_config.cc \
   /usr/include/c++/11/bits/indirect_array.h \
   /usr/local/include/yaml-cpp/node/detail/impl.h \
   /usr/local/include/yaml-cpp/node/parse.h \
-  /usr/local/include/yaml-cpp/node/emit.h
+  /usr/local/include/yaml-cpp/node/emit.h \
+  ../sylar/log.h
 
 
 /usr/local/include/yaml-cpp/node/emit.h:
