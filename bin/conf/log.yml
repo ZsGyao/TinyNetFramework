@@ -27,3 +27,9 @@ system:
   str_int_umap:
     zs: 199
     ss: 198
+
+class:
+  person:
+    name: zgy
+    age: 26
+    sex: true
