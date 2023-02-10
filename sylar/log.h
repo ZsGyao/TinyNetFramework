@@ -8,10 +8,16 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <stdarg.h>
 #include <iostream>
 #include <map>
 #include "util.h"
 #include "singleton.h"
+#include <yaml-cpp/yaml.h>
+
+
+#define SYLAR_LOG_ROOT() sylar::LoggerMgr::GetInstance() -> getRoot()
+#define SYLAR_LOG_NAME(name) sylar::LoggerMgr::GetInstance() -> getLogger(name)
 
 #define SYLAR_LOG_LEVEL(logger, level) \
     if(logger->getLevel() <= level) \
@@ -36,11 +42,11 @@
 #define SYLAR_LOG_FMT_ERROR(logger, fmt, ...) SYLAR_LOG_FMT_LEVEL(logger, sylar::LogLevel::ERROR, fmt, __VA_ARGS__)
 #define SYLAR_LOG_FMT_FATAL(logger, fmt, ...) SYLAR_LOG_FMT_LEVEL(logger, sylar::LogLevel::FATAL, fmt, __VA_ARGS__)
 
-#define SYLAR_LOG_ROOT() sylar::LoggerMgr::GetInstance() -> getRoot()
 
 namespace sylar {
 
     class Logger;
+    class LoggerManager;
 
     //日志级别
     class LogLevel {
@@ -302,6 +308,8 @@ namespace sylar {
          */
         void delAppender(LogAppender::ptr appender);
 
+        void clearAppender();
+
         /*
          * 获取日志级别
          */
@@ -312,7 +320,7 @@ namespace sylar {
         /*
          * 设置日志级别
          */
-        void setLevel(LogLevel::Level level);
+        void setLevel(LogLevel::Level level) { m_level = level; };
 
         /**
          * @brief 返回日志名称

@@ -52,7 +52,7 @@ void print_yaml(const YAML::Node &node, int level) {
 }
 
 void test_yaml() {
-    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/test.yml");
     print_yaml(root, 0);
     //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << root;
 }
@@ -85,7 +85,7 @@ void test_config() {
     XX_M(g_str_int_map_value_config, str_int_map, before);
     XX_M(g_str_int_umap_value_config, str_int_umap, before);
 
-    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/test.yml");
     sylar::Config::LoadFromYaml(root);
 
     SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "after: " << g_int_value_config->getValue();
@@ -160,7 +160,7 @@ void test_class() {
                                          << " new_value=" << new_value.toString();
     });
 
-    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/test.yml");
     sylar::Config::LoadFromYaml(root);
     SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "after: " << g_person_config->getValue().toString() << " - " << g_person_config->toString();
 }

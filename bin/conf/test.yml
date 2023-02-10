@@ -1,0 +1,35 @@
+logs:
+  - name: root
+    level: info
+    formatter: '%d%T%m%n'
+    appender:
+      - type: FileLogAppender
+        file: log.txt
+      - type: StdoutLogAppender
+  - name: system
+    level: debug
+    formatter: '%d%T%m%n'
+    appender: 
+      - type: FileLogAppender
+        path: log.txt
+      - type: StdoutLogAppender
+
+system:
+  port: 9900
+  value: 15
+  int_vec: [10,20]
+  int_list: [200,300,400]
+  int_set: [11,34,66]
+  int_uset: [10,20,30,20]
+  str_int_map:
+    zs: 1999
+    ss: 1998
+  str_int_umap:
+    zs: 199
+    ss: 198
+
+class:
+  person:
+    name: zgy
+    age: 26
+    sex: true
