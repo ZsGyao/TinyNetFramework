@@ -813,26 +813,11 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: ../tests/test_config.cc \
   /usr/include/boost/integer.hpp \
   /usr/include/boost/integer_fwd.hpp \
   /usr/include/boost/detail/basic_pointerbuf.hpp \
-  ../sylar/log.h \
-  /usr/include/c++/11/list \
-  /usr/include/c++/11/bits/stl_list.h \
-  /usr/include/c++/11/bits/list.tcc \
-  /usr/include/c++/11/fstream \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
-  /usr/include/c++/11/bits/fstream.tcc \
-  /usr/include/c++/11/iostream \
   /usr/include/c++/11/map \
   /usr/include/c++/11/bits/stl_tree.h \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
   /usr/include/c++/11/bits/erase_if.h \
-  ../sylar/util.h \
-  /usr/include/x86_64-linux-gnu/sys/syscall.h \
-  /usr/include/x86_64-linux-gnu/asm/unistd.h \
-  /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
-  /usr/include/x86_64-linux-gnu/bits/syscall.h \
-  ../sylar/singleton.h \
   /usr/local/include/yaml-cpp/yaml.h \
   /usr/local/include/yaml-cpp/parser.h \
   /usr/local/include/yaml-cpp/dll.h \
@@ -844,6 +829,9 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: ../tests/test_config.cc \
   /usr/local/include/yaml-cpp/ostream_wrapper.h \
   /usr/local/include/yaml-cpp/emitterstyle.h \
   /usr/local/include/yaml-cpp/stlemitter.h \
+  /usr/include/c++/11/list \
+  /usr/include/c++/11/bits/stl_list.h \
+  /usr/include/c++/11/bits/list.tcc \
   /usr/include/c++/11/set \
   /usr/include/c++/11/bits/stl_set.h \
   /usr/include/c++/11/bits/stl_multiset.h \
@@ -885,8 +873,32 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: ../tests/test_config.cc \
   /usr/local/include/yaml-cpp/node/emit.h \
   /usr/include/c++/11/unordered_set \
   /usr/include/c++/11/bits/unordered_set.h \
+  ../sylar/log.h \
+  /usr/include/c++/11/fstream \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+  /usr/include/c++/11/bits/fstream.tcc \
+  /usr/include/c++/11/iostream \
+  ../sylar/util.h \
+  /usr/include/x86_64-linux-gnu/sys/syscall.h \
+  /usr/include/x86_64-linux-gnu/asm/unistd.h \
+  /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
+  /usr/include/x86_64-linux-gnu/bits/syscall.h \
+  ../sylar/singleton.h \
   ../sylar/log.h
 
+
+/usr/include/x86_64-linux-gnu/bits/syscall.h:
+
+/usr/include/x86_64-linux-gnu/asm/unistd_64.h:
+
+/usr/include/x86_64-linux-gnu/sys/syscall.h:
+
+../sylar/util.h:
+
+/usr/include/c++/11/bits/fstream.tcc:
+
+/usr/include/c++/11/fstream:
 
 /usr/include/c++/11/unordered_set:
 
@@ -932,23 +944,11 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: ../tests/test_config.cc \
 
 /usr/local/include/yaml-cpp/emitter.h:
 
-/usr/include/x86_64-linux-gnu/bits/syscall.h:
-
-/usr/include/x86_64-linux-gnu/asm/unistd_64.h:
-
-/usr/include/x86_64-linux-gnu/sys/syscall.h:
-
-../sylar/util.h:
-
 /usr/include/c++/11/bits/erase_if.h:
 
 /usr/include/c++/11/bits/stl_multimap.h:
 
 /usr/include/c++/11/bits/stl_map.h:
-
-/usr/include/c++/11/bits/fstream.tcc:
-
-/usr/include/c++/11/fstream:
 
 /usr/include/boost/integer.hpp:
 

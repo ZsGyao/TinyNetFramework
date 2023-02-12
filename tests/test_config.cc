@@ -165,9 +165,15 @@ void test_class() {
     SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "after: " << g_person_config->getValue().toString() << " - " << g_person_config->toString();
 }
 
+void test_log() {
+    YAML::Node root = YAML::LoadFile("/home/zgys/workspace/sylar/bin/conf/log.yml");
+    sylar::Config::LoadFromYaml(root);
+}
+
 int main(int argc, char **argv) {
     //test_yaml();
     //test_config();
-    test_class();
+    //test_class();
+    test_log();
     return 0;
 }
