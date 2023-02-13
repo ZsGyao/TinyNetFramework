@@ -208,6 +208,11 @@ namespace sylar {
         */
         bool isError() const { return m_error; }
 
+        /**
+     * @brief 返回日志模板
+     */
+        const std::string getPattern() const { return m_pattern;}
+
     private:
         std::string m_pattern;
         std::vector<FormatItem::ptr> m_items;
@@ -235,15 +240,20 @@ namespace sylar {
         virtual void log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) = 0;
 
         /**
+         * @brief 将日志输出目标的配置转成YAML String
+         */
+        virtual std::string toYamlString() = 0;
+
+        /**
          * @brief 更改日志格式器
-        */
+         */
         void setFormatter(LogFormatter::ptr val) { m_formatter = val; }
 
         LogFormatter::ptr getFormatter() const { return m_formatter; }
 
         /**
          * @brief 设置日志级别
-        */
+         */
         void setLevel(LogLevel::Level val) { m_level = val; }
 
     protected:
@@ -342,6 +352,11 @@ namespace sylar {
          */
         LogFormatter::ptr getFormatter();
 
+        /**
+         * @brief 将日志器的配置转成YAML String
+         */
+        std::string toYamlString();
+
     private:
         std::string m_name;                       // 日志名称
         LogLevel::Level m_level;                  // 日志级别
@@ -357,6 +372,7 @@ namespace sylar {
 
         void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override; //父类中重载的方法
 
+        std::string toYamlString() override;
     };
 
     //定义输出到文件的Appender
@@ -369,6 +385,8 @@ namespace sylar {
         ~FileLogAppender() override;
 
         void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override;
+
+        std::string toYamlString() override;
 
         /**
          * @brief 重新打开日志文件
@@ -408,6 +426,10 @@ namespace sylar {
          */
         Logger::ptr getRoot() const { return m_root; }
 
+        /**
+         * @brief 将所有的日志器配置转成YAML String
+         */
+        std::string toYamlString();
     private:
         // 日志器容器
         std::map<std::string, Logger::ptr> m_loggers;

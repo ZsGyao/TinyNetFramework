@@ -258,7 +258,7 @@ namespace sylar {
     }
 
     void Logger::setFormatter(const std::string &val) {
-        std::cout << "---" << val << std::endl;
+        //std::cout << "---" << val << std::endl;
         sylar::LogFormatter::ptr new_val(new sylar::LogFormatter(val));
         if (new_val->isError()) {
             std::cout << "Logger setFormatter name=" << m_name
@@ -329,6 +329,25 @@ namespace sylar {
         log(LogLevel::FATAL, event);
     }
 
+    std::string Logger::toYamlString() {
+        //MutexType::Lock lock(m_mutex);
+        YAML::Node node;
+        node["name"] = m_name;
+        if(m_level != LogLevel::UNKNOW) {
+            node["level"] = LogLevel::ToString(m_level);
+        }
+        if(m_formatter) {
+            node["formatter"] = m_formatter->getPattern();
+        }
+
+        for(auto& i : m_appenders) {
+            node["appenders"].push_back(YAML::Load(i->toYamlString()));
+        }
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
+    }
+
     FileLogAppender::FileLogAppender(
             const std::string &filename)
             : m_filename(filename) {
@@ -355,10 +374,41 @@ namespace sylar {
         return !!m_filestream; //使用！！让m_filestream变量返回为bool型
     }
 
+    std::string FileLogAppender::toYamlString() {
+        //MutexType::Lock lock(m_mutex);
+        YAML::Node node;
+        node["type"] = "FileLogAppender";
+        node["file"] = m_filename;
+        if(m_level != LogLevel::UNKNOW) {
+            node["level"] = LogLevel::ToString(m_level);
+        }
+        if(m_hasFormatter && m_formatter) {
+            node["formatter"] = m_formatter->getPattern();
+        }
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
+    }
+
     void StdoutLogAppender::log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) {
         if (level >= m_level) {
             std::cout << m_formatter->format(logger, level, event);
         }
+    }
+
+    std::string StdoutLogAppender::toYamlString() {
+        //MutexType::Lock lock(m_mutex);
+        YAML::Node node;
+        node["type"] = "StdoutLogAppender";
+        if(m_level != LogLevel::UNKNOW) {
+            node["level"] = LogLevel::ToString(m_level);
+        }
+        if(m_hasFormatter && m_formatter) {
+            node["formatter"] = m_formatter->getPattern();
+        }
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
     }
 
     LogFormatter::LogFormatter(
@@ -383,146 +433,6 @@ namespace sylar {
         return ofs;
     }
 
-    /**
-    // %xxx %xxx{xxx} %%   %d %t{HH:dd....}
-    void LogFormatter::init() {
-        // str: 参数
-        // format: {} 里内容
-        // type: 0:ture 1:error
-        std::vector<std::tuple<std::string, std::string, int>> vec;
-        std::string str;
-        for (size_t i = 0; i < m_pattern.size(); i++) {
-            int fmt_status = 0;    //  是否开始解析{}内容
-
-            //不是‘%’ ，往字符串后追加%后的参数
-            if (m_pattern[i] != '%') {
-                str.append(1, m_pattern[i]);
-                continue;
-            }
-            // '%'出现1个
-            if ((i + 1) < m_pattern.size()) {
-                //'%'连续出现2个，往字符串后追加一个 ‘%’
-                if (m_pattern[i + 1] == '%') {
-                    str.append(1, '%');
-                    continue;
-                }
-            }
-
-            size_t n = i + 1;      //  '%'后一位
-            //int fmt_status = 0;    //  是否开始解析{}内容
-            std::string _str;      //  %xxx{xxx}中‘{’前字符
-            std::string fmt;       //  %xxx{xxx}中‘{}’中字符
-            size_t fmt_begin; //  fmt开始位置
-            while (n < m_pattern.size()) {
-                //[]
-                if (!fmt_status && (!isalpha(m_pattern[n]) && m_pattern[n] != '{' && m_pattern[n] != '}')) {
-                    _str = m_pattern.substr(i + 1, n - i - 1);
-                    break;
-                }
-                //还未开始解析{}内容
-                if (fmt_status == 0) {
-                    if (m_pattern[n] == '{') {
-                        _str = m_pattern.substr(i + 1, n - i - 1);
-                        fmt_status = 1; //解析格式
-                        fmt_begin = n;
-                        ++n;
-                        continue;
-                    }
-                }
-                //在 ‘{}’ 中,开始解析{}内容
-                if (fmt_status == 1) {
-                    if (m_pattern[n] == '}') {
-                        fmt = m_pattern.substr(fmt_begin + 1, n - fmt_begin - 1);
-                        fmt_status = 2;
-                        ++n;
-                        break;
-                    }
-                }
-                ++n; //i=0 n=2
-
-                if(n == m_pattern.size()) {
-                    if(str.empty()) {
-                        str = m_pattern.substr(i + 1);
-                    }
-                }
-
-            }
-            //如果是 %xxx 格式的
-            if (fmt_status == 0) { // 解析完成
-                if (!str.empty()) {
-                    vec.push_back(std::make_tuple(str, std::string(), 0));
-                    str.clear();
-                }
-                str = m_pattern.substr(i + 1, n - i - 1);
-                vec.push_back(std::make_tuple(str, fmt, 1));
-                i = n -1; //i=1
-            } else if (fmt_status == 1) { //‘{’ 后没有 ‘}’ 结尾，格式错误
-                std::cout << "pattern parse error: " << m_pattern << " - " << m_pattern.substr(i) << std::endl;
-                m_error = true;
-                vec.push_back(std::make_tuple("<<pattern_error>>", fmt, 0));
-            } else if (fmt_status == 2) {
-                if (!str.empty()) {
-                    vec.push_back(std::make_tuple(str, "", 0));
-                    str.clear();
-                }
-                vec.push_back(std::make_tuple(str, fmt, 1));
-                i = n - 1;
-            }
-        }
-        //%xxx{xxx}aaa 中 aaa
-        if (!str.empty()) {
-            vec.push_back(std::make_tuple(str, "", 0));
-        }
-
-        // %m -- 输出代码中指定的消息
-        // %p -- 输出优先级 DEBUG, INFO, WARN, ERROR, FATAL
-        // %r -- 输出自应用启动到输出该log信息耗费的毫秒数
-        // %c -- 输出所属的类目，通常就是所在类的全名
-        // %t -- 输出产生该日志事件的线程名
-        // %n -- 输出一个回车换行符，Windows平台为“\\r\\n”， Unix平台为“\\n”
-        // %d -- 输出日志时间点的日期或时间，比如 %d{yyy MMM dd HH:mm:ss,SSS}
-        // %l -- 输出日志事件的发生位置，包括类目名、发生的线程、以及在代码中的行数
-        static std::map<std::string, std::function<LogFormatter::FormatItem::ptr(
-                const std::string &str)>> s_format_items = {
-#define XX(str, C) \
-{#str,[](const std::string &fmt) { return LogFormatter::FormatItem::ptr(new C(fmt)); }}
-
-                XX(m, MessageFormatItem),
-                XX(p, LevelFormatItem),
-                XX(r, ElapseFormatItem),
-                XX(c, LogNameFormatItem),
-                XX(t, ThreadIdFormatItem),
-                XX(n, NewLineFormatItem),
-                XX(d, DateTimeFormatItem),
-                XX(f, FilenameFormatItem),
-                XX(l, LineFormatItem),
-                XX(T, TabFormatItem),               //T:Tab
-                XX(F, FiberIdFormatItem),           //F:协程id
-                XX(N, ThreadNameFormatItem),        //N:线程名称
-#undef XX
-        };
-
-        for (auto &i: vec) {
-            if (std::get<2>(i) == 0) { //str
-                m_items.push_back(
-                        FormatItem::ptr(new StringFormatItem(std::get<0>(i))));
-            } else {
-                auto it = s_format_items.find(std::get<0>(i));
-                if (it == s_format_items.end()) { //如果在回调函数中没有这个参数
-                    m_items.push_back(FormatItem::ptr(new StringFormatItem(
-                            "error_format %" + std::get<0>(i) + " >>")));
-                    m_error = true;
-                } else {
-                    m_items.push_back(it->second(std::get<1>(i)));
-                }
-            }
-
-            std::cout << "(" << std::get<0>(i) << ") - (" << std::get<1>(i) << ") - (" << std::get<2>(i) << ")"
-                      << std::endl;
-        }
-
-    }
-     */
 
     /**
  * 简单的状态机判断，提取pattern中的常规字符和模式字符
@@ -629,6 +539,14 @@ namespace sylar {
 //         }
 //         std::cout << "dataformat = " << dateformat << std::endl;
 
+// %m -- 输出代码中指定的消息
+        // %p -- 输出优先级 DEBUG, INFO, WARN, ERROR, FATAL
+        // %r -- 输出自应用启动到输出该log信息耗费的毫秒数
+        // %c -- 输出所属的类目，通常就是所在类的全名
+        // %t -- 输出产生该日志事件的线程名
+        // %n -- 输出一个回车换行符，Windows平台为“\\r\\n”， Unix平台为“\\n”
+        // %d -- 输出日志时间点的日期或时间，比如 %d{yyy MMM dd HH:mm:ss,SSS}
+        // %l -- 输出日志事件的发生位置，包括类目名、发生的线程、以及在代码中的行数
         static std::map<std::string, std::function<FormatItem::ptr(const std::string &str)> > s_format_items = {
 #define XX(str, C)  {#str, [](const std::string& fmt) { return FormatItem::ptr(new C(fmt));} }
 
@@ -697,6 +615,18 @@ namespace sylar {
         m_loggers[name] = logger;
         return logger;
     }
+
+    std::string LoggerManager::toYamlString() {
+        //MutexType::Lock lock(m_mutex);
+        YAML::Node node;
+        for(auto& i : m_loggers) {
+            node.push_back(YAML::Load(i.second->toYamlString()));
+        }
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
+    }
+
 
     struct LogAppenderDefine {
         int type = 0; //1 file   2 stdout
