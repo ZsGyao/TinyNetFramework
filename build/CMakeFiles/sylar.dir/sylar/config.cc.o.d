@@ -1,6 +1,6 @@
 CMakeFiles/sylar.dir/sylar/config.cc.o: \
  /home/zgys/workspace/sylar/sylar/config.cc /usr/include/stdc-predef.h \
- /home/zgys/workspace/sylar/sylar/config.h /usr/include/c++/11/memory \
+ /home/zgys/workspace/sylar/./sylar/config.h /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -113,16 +113,13 @@ CMakeFiles/sylar.dir/sylar/config.cc.o: \
  /usr/include/c++/11/bits/shared_ptr_atomic.h \
  /usr/include/c++/11/bits/atomic_base.h \
  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
- /usr/include/c++/11/backward/auto_ptr.h /usr/include/c++/11/sstream \
- /usr/include/c++/11/istream /usr/include/c++/11/ios \
+ /usr/include/c++/11/backward/auto_ptr.h /usr/include/c++/11/string \
  /usr/include/c++/11/bits/char_traits.h /usr/include/c++/11/cstdint \
  /usr/include/c++/11/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h \
  /usr/include/c++/11/clocale /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/11/cctype \
- /usr/include/ctype.h /usr/include/c++/11/bits/ios_base.h \
- /usr/include/c++/11/bits/locale_classes.h /usr/include/c++/11/string \
- /usr/include/c++/11/bits/ostream_insert.h \
+ /usr/include/ctype.h /usr/include/c++/11/bits/ostream_insert.h \
  /usr/include/c++/11/bits/cxxabi_forced.h \
  /usr/include/c++/11/bits/basic_string.h \
  /usr/include/c++/11/ext/string_conversions.h /usr/include/c++/11/cstdlib \
@@ -151,7 +148,10 @@ CMakeFiles/sylar.dir/sylar/config.cc.o: \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/11/bits/charconv.h \
- /usr/include/c++/11/bits/basic_string.tcc \
+ /usr/include/c++/11/bits/basic_string.tcc /usr/include/c++/11/sstream \
+ /usr/include/c++/11/istream /usr/include/c++/11/ios \
+ /usr/include/c++/11/bits/ios_base.h \
+ /usr/include/c++/11/bits/locale_classes.h \
  /usr/include/c++/11/bits/locale_classes.tcc \
  /usr/include/c++/11/system_error \
  /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h \
@@ -718,12 +718,9 @@ CMakeFiles/sylar.dir/sylar/config.cc.o: \
  /usr/include/boost/math/special_functions/fpclassify.hpp \
  /usr/include/boost/math/tools/real_cast.hpp \
  /usr/include/boost/integer.hpp /usr/include/boost/integer_fwd.hpp \
- /usr/include/boost/detail/basic_pointerbuf.hpp /usr/include/c++/11/map \
- /usr/include/c++/11/bits/stl_tree.h /usr/include/c++/11/bits/stl_map.h \
- /usr/include/c++/11/bits/stl_multimap.h \
- /usr/include/c++/11/bits/erase_if.h /usr/local/include/yaml-cpp/yaml.h \
- /usr/local/include/yaml-cpp/parser.h /usr/local/include/yaml-cpp/dll.h \
- /usr/local/include/yaml-cpp/emitter.h \
+ /usr/include/boost/detail/basic_pointerbuf.hpp \
+ /usr/local/include/yaml-cpp/yaml.h /usr/local/include/yaml-cpp/parser.h \
+ /usr/local/include/yaml-cpp/dll.h /usr/local/include/yaml-cpp/emitter.h \
  /usr/local/include/yaml-cpp/binary.h \
  /usr/local/include/yaml-cpp/emitterdef.h \
  /usr/local/include/yaml-cpp/emittermanip.h \
@@ -732,8 +729,12 @@ CMakeFiles/sylar.dir/sylar/config.cc.o: \
  /usr/local/include/yaml-cpp/emitterstyle.h \
  /usr/local/include/yaml-cpp/stlemitter.h /usr/include/c++/11/list \
  /usr/include/c++/11/bits/stl_list.h /usr/include/c++/11/bits/list.tcc \
- /usr/include/c++/11/set /usr/include/c++/11/bits/stl_set.h \
+ /usr/include/c++/11/set /usr/include/c++/11/bits/stl_tree.h \
+ /usr/include/c++/11/bits/stl_set.h \
  /usr/include/c++/11/bits/stl_multiset.h \
+ /usr/include/c++/11/bits/erase_if.h /usr/include/c++/11/map \
+ /usr/include/c++/11/bits/stl_map.h \
+ /usr/include/c++/11/bits/stl_multimap.h \
  /usr/local/include/yaml-cpp/exceptions.h \
  /usr/local/include/yaml-cpp/mark.h \
  /usr/local/include/yaml-cpp/noexcept.h \
@@ -769,13 +770,36 @@ CMakeFiles/sylar.dir/sylar/config.cc.o: \
  /usr/local/include/yaml-cpp/node/emit.h \
  /usr/include/c++/11/unordered_set \
  /usr/include/c++/11/bits/unordered_set.h \
- /home/zgys/workspace/sylar/sylar/log.h /usr/include/c++/11/fstream \
+ /home/zgys/workspace/sylar/./sylar/thread.h \
+ /home/zgys/workspace/sylar/./sylar/mutex.h /usr/include/c++/11/iostream \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h /usr/include/c++/11/chrono \
+ /usr/include/c++/11/ratio /usr/include/c++/11/bits/parse_numbers.h \
+ /usr/include/semaphore.h /usr/include/x86_64-linux-gnu/bits/semaphore.h \
+ /home/zgys/workspace/sylar/./sylar/noncopyable.h \
+ /home/zgys/workspace/sylar/./sylar/log.h /usr/include/c++/11/fstream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
- /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/iostream \
- /home/zgys/workspace/sylar/sylar/util.h \
+ /usr/include/c++/11/bits/fstream.tcc \
+ /home/zgys/workspace/sylar/./sylar/util.h \
  /usr/include/x86_64-linux-gnu/sys/syscall.h \
  /usr/include/x86_64-linux-gnu/asm/unistd.h \
  /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
  /usr/include/x86_64-linux-gnu/bits/syscall.h \
- /home/zgys/workspace/sylar/sylar/singleton.h
+ /home/zgys/workspace/sylar/./sylar/singleton.h \
+ /home/zgys/workspace/sylar/./sylar/util.h \
+ /usr/include/x86_64-linux-gnu/sys/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
+ /usr/include/x86_64-linux-gnu/bits/statx.h /usr/include/linux/stat.h \
+ /usr/include/linux/types.h /usr/include/x86_64-linux-gnu/asm/types.h \
+ /usr/include/asm-generic/types.h /usr/include/asm-generic/int-ll64.h \
+ /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+ /usr/include/asm-generic/posix_types.h \
+ /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h

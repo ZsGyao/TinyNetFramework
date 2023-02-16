@@ -10,5 +10,6 @@
 #include "sylar/util.h"
 #include "singleton.h"
 #include "thread.h"
+#include "mutex.h"
 
 #endif //SYLAR_SYLAR_H

@@ -135,9 +135,7 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/c++/11/bits/atomic_base.h \
   /usr/include/c++/11/bits/atomic_lockfree_defines.h \
   /usr/include/c++/11/backward/auto_ptr.h \
-  /usr/include/c++/11/sstream \
-  /usr/include/c++/11/istream \
-  /usr/include/c++/11/ios \
+  /usr/include/c++/11/string \
   /usr/include/c++/11/bits/char_traits.h \
   /usr/include/c++/11/cstdint \
   /usr/include/c++/11/bits/localefwd.h \
@@ -147,9 +145,6 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/c++/11/cctype \
   /usr/include/ctype.h \
-  /usr/include/c++/11/bits/ios_base.h \
-  /usr/include/c++/11/bits/locale_classes.h \
-  /usr/include/c++/11/string \
   /usr/include/c++/11/bits/ostream_insert.h \
   /usr/include/c++/11/bits/cxxabi_forced.h \
   /usr/include/c++/11/bits/basic_string.h \
@@ -190,6 +185,11 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
   /usr/include/c++/11/bits/charconv.h \
   /usr/include/c++/11/bits/basic_string.tcc \
+  /usr/include/c++/11/sstream \
+  /usr/include/c++/11/istream \
+  /usr/include/c++/11/ios \
+  /usr/include/c++/11/bits/ios_base.h \
+  /usr/include/c++/11/bits/locale_classes.h \
   /usr/include/c++/11/bits/locale_classes.tcc \
   /usr/include/c++/11/system_error \
   /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h \
@@ -814,11 +814,6 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/boost/integer.hpp \
   /usr/include/boost/integer_fwd.hpp \
   /usr/include/boost/detail/basic_pointerbuf.hpp \
-  /usr/include/c++/11/map \
-  /usr/include/c++/11/bits/stl_tree.h \
-  /usr/include/c++/11/bits/stl_map.h \
-  /usr/include/c++/11/bits/stl_multimap.h \
-  /usr/include/c++/11/bits/erase_if.h \
   /usr/local/include/yaml-cpp/yaml.h \
   /usr/local/include/yaml-cpp/parser.h \
   /usr/local/include/yaml-cpp/dll.h \
@@ -834,8 +829,13 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/c++/11/bits/stl_list.h \
   /usr/include/c++/11/bits/list.tcc \
   /usr/include/c++/11/set \
+  /usr/include/c++/11/bits/stl_tree.h \
   /usr/include/c++/11/bits/stl_set.h \
   /usr/include/c++/11/bits/stl_multiset.h \
+  /usr/include/c++/11/bits/erase_if.h \
+  /usr/include/c++/11/map \
+  /usr/include/c++/11/bits/stl_map.h \
+  /usr/include/c++/11/bits/stl_multimap.h \
   /usr/local/include/yaml-cpp/exceptions.h \
   /usr/local/include/yaml-cpp/mark.h \
   /usr/local/include/yaml-cpp/noexcept.h \
@@ -874,12 +874,23 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/local/include/yaml-cpp/node/emit.h \
   /usr/include/c++/11/unordered_set \
   /usr/include/c++/11/bits/unordered_set.h \
+  ../sylar/thread.h \
+  ../sylar/mutex.h \
+  /usr/include/c++/11/iostream \
+  /usr/include/c++/11/thread \
+  /usr/include/c++/11/bits/std_thread.h \
+  /usr/include/c++/11/bits/this_thread_sleep.h \
+  /usr/include/c++/11/chrono \
+  /usr/include/c++/11/ratio \
+  /usr/include/c++/11/bits/parse_numbers.h \
+  /usr/include/semaphore.h \
+  /usr/include/x86_64-linux-gnu/bits/semaphore.h \
+  ../sylar/noncopyable.h \
   ../sylar/log.h \
   /usr/include/c++/11/fstream \
   /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
   /usr/include/c++/11/bits/fstream.tcc \
-  /usr/include/c++/11/iostream \
   ../sylar/util.h \
   /usr/include/x86_64-linux-gnu/sys/syscall.h \
   /usr/include/x86_64-linux-gnu/asm/unistd.h \
@@ -887,21 +898,8 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/x86_64-linux-gnu/bits/syscall.h \
   ../sylar/singleton.h \
   ../sylar/log.h \
-  ../sylar/util.h \
-  ../sylar/thread.h \
-  /usr/include/c++/11/thread \
-  /usr/include/c++/11/bits/std_thread.h \
-  /usr/include/c++/11/bits/this_thread_sleep.h \
-  /usr/include/c++/11/chrono \
-  /usr/include/c++/11/ratio \
-  /usr/include/c++/11/bits/parse_numbers.h
+  ../sylar/util.h
 
-
-/usr/include/c++/11/bits/parse_numbers.h:
-
-/usr/include/c++/11/ratio:
-
-/usr/include/c++/11/bits/this_thread_sleep.h:
 
 /usr/include/x86_64-linux-gnu/bits/syscall.h:
 
@@ -914,6 +912,16 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 /usr/include/c++/11/bits/fstream.tcc:
 
 /usr/include/c++/11/fstream:
+
+/usr/include/semaphore.h:
+
+/usr/include/c++/11/bits/parse_numbers.h:
+
+/usr/include/c++/11/ratio:
+
+/usr/include/c++/11/bits/this_thread_sleep.h:
+
+../sylar/mutex.h:
 
 /usr/include/c++/11/unordered_set:
 
@@ -947,6 +955,12 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 
 /usr/local/include/yaml-cpp/mark.h:
 
+/usr/include/c++/11/bits/stl_multimap.h:
+
+/usr/include/c++/11/bits/stl_map.h:
+
+/usr/include/c++/11/bits/erase_if.h:
+
 /usr/include/c++/11/bits/stl_set.h:
 
 /usr/local/include/yaml-cpp/stlemitter.h:
@@ -958,12 +972,6 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 /usr/local/include/yaml-cpp/emitterdef.h:
 
 /usr/local/include/yaml-cpp/emitter.h:
-
-/usr/include/c++/11/bits/erase_if.h:
-
-/usr/include/c++/11/bits/stl_multimap.h:
-
-/usr/include/c++/11/bits/stl_map.h:
 
 /usr/include/boost/integer.hpp:
 
@@ -1477,6 +1485,20 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 
 /usr/include/boost/type_traits/is_integral.hpp:
 
+/usr/include/c++/11/bits/locale_classes.h:
+
+/usr/include/boost/mpl/vector/aux_/size.hpp:
+
+/usr/include/c++/11/bits/ios_base.h:
+
+/usr/include/c++/11/istream:
+
+/usr/include/boost/mpl/aux_/config/msvc_typename.hpp:
+
+/usr/include/boost/mpl/aux_/config/msvc.hpp:
+
+/usr/include/boost/range/value_type.hpp:
+
 /usr/include/c++/11/bits/basic_string.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
@@ -1561,17 +1583,13 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
-/usr/include/c++/11/bits/locale_classes.h:
-
-/usr/include/boost/mpl/vector/aux_/size.hpp:
-
-/usr/include/c++/11/bits/ios_base.h:
-
 /usr/include/c++/11/bits/stream_iterator.h:
 
 /usr/include/boost/mpl/aux_/config/bind.hpp:
 
 /usr/include/ctype.h:
+
+../sylar/noncopyable.h:
 
 /usr/include/boost/mpl/aux_/config/bcc.hpp:
 
@@ -1602,14 +1620,6 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 /usr/include/boost/range/has_range_iterator.hpp:
 
 /usr/include/boost/type_traits/make_unsigned.hpp:
-
-/usr/include/c++/11/istream:
-
-/usr/include/boost/mpl/aux_/config/msvc_typename.hpp:
-
-/usr/include/boost/mpl/aux_/config/msvc.hpp:
-
-/usr/include/boost/range/value_type.hpp:
 
 /usr/include/string.h:
 
@@ -2072,6 +2082,8 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 /usr/include/c++/11/bits/allocated_ptr.h:
 
 /usr/include/c++/11/bits/refwrap.h:
+
+/usr/include/x86_64-linux-gnu/bits/semaphore.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 

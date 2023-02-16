@@ -15,7 +15,7 @@ set(LIB_SRC
         sylar/log.cc
         sylar/util.cc
         sylar/config.cc
-        sylar/thread.cc sylar/sylar.h)
+         sylar/thread.h sylar/thread.cc sylar/mutex.h sylar/mutex.cc sylar/noncopyable.h)
 
 set(LIB_LIB
         sylar
