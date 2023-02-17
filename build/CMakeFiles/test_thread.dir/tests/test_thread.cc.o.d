@@ -789,4 +789,8 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: \
  /usr/include/x86_64-linux-gnu/bits/syscall.h \
  /home/zgys/workspace/sylar/./sylar/singleton.h \
  /home/zgys/workspace/sylar/./sylar/log.h \
- /home/zgys/workspace/sylar/./sylar/util.h
+ /home/zgys/workspace/sylar/./sylar/util.h \
+ /home/zgys/workspace/sylar/./sylar/singleton.h \
+ /home/zgys/workspace/sylar/./sylar/thread.h \
+ /home/zgys/workspace/sylar/./sylar/mutex.h \
+ /home/zgys/workspace/sylar/./sylar/macro.h

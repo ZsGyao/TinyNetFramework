@@ -8,8 +8,10 @@
 #include "sylar/config.h"
 #include "sylar/log.h"
 #include "sylar/util.h"
-#include "singleton.h"
-#include "thread.h"
-#include "mutex.h"
+#include "sylar/singleton.h"
+#include "sylar/thread.h"
+#include "sylar/mutex.h"
+#include "sylar/macro.h"
+
 
 #endif //SYLAR_SYLAR_H

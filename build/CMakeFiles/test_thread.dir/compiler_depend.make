@@ -898,7 +898,11 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
   /usr/include/x86_64-linux-gnu/bits/syscall.h \
   ../sylar/singleton.h \
   ../sylar/log.h \
-  ../sylar/util.h
+  ../sylar/util.h \
+  ../sylar/singleton.h \
+  ../sylar/thread.h \
+  ../sylar/mutex.h \
+  ../sylar/macro.h
 
 
 /usr/include/x86_64-linux-gnu/bits/syscall.h:
@@ -2312,6 +2316,8 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o: ../tests/test_thread.cc \
 /usr/include/boost/mpl/aux_/arithmetic_op.hpp:
 
 /usr/include/boost/type_traits/is_const.hpp:
+
+../sylar/macro.h:
 
 /usr/include/boost/iterator/iterator_adaptor.hpp:
 
