@@ -12,6 +12,7 @@
 #include "sylar/thread.h"
 #include "sylar/mutex.h"
 #include "sylar/macro.h"
+#include "sylar/fiber.h"
 
 
 #endif //SYLAR_SYLAR_H

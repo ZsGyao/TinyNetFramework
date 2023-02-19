@@ -902,8 +902,21 @@ CMakeFiles/test_util.dir/tests/test_util.cc.o: ../tests/test_util.cc \
   ../sylar/singleton.h \
   ../sylar/thread.h \
   ../sylar/mutex.h \
-  ../sylar/macro.h
+  ../sylar/macro.h \
+  ../sylar/fiber.h \
+  /usr/include/ucontext.h \
+  /usr/include/x86_64-linux-gnu/bits/indirect-return.h \
+  /usr/include/x86_64-linux-gnu/sys/ucontext.h \
+  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
 
+
+/usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
+
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
+
+/usr/include/ucontext.h:
+
+../sylar/fiber.h:
 
 /usr/include/x86_64-linux-gnu/bits/syscall.h:
 
@@ -2100,6 +2113,8 @@ CMakeFiles/test_util.dir/tests/test_util.cc.o: ../tests/test_util.cc \
 /usr/include/boost/mpl/list/aux_/front.hpp:
 
 /usr/include/c++/11/bits/shared_ptr_base.h:
+
+/usr/include/x86_64-linux-gnu/bits/indirect-return.h:
 
 /usr/include/c++/11/set:
 
