@@ -5,7 +5,7 @@
 #include "config.h"
 #include "macro.h"
 #include "log.h"
-#include "schedule.h"
+#include "scheduler.h"
 #include <atomic>
 
 namespace sylar {
@@ -72,6 +72,7 @@ namespace sylar {
         m_ctx.uc_stack.ss_size = m_stacksize;
 
         makecontext(&m_ctx, &Fiber::MainFunc, 0);
+        SYLAR_LOG_DEBUG(g_logger) << "Fiber::Fiber() id = " << m_id;
     }
 
     Fiber::~Fiber(){
@@ -126,7 +127,7 @@ namespace sylar {
 
         // 如果协程参与调度器调度，那么应该和调度器的主协程进行swap，而不是线程主协程
         if (m_runInSchedule) {
-            if (swapcontext(&m_ctx, &Schedule::GetMainFiber()->m_ctx)) {
+            if (swapcontext(&m_ctx, &Scheduler::GetMainFiber()->m_ctx)) {
                 SYLAR_ASSERT2(false, "swapcontext");
             }
         }else {
@@ -143,7 +144,7 @@ namespace sylar {
 
         // 如果协程参与调度器调度，那么应该和调度器的主协程进行swap，而不是线程主协程
         if(m_runInSchedule) {
-            if(swapcontext(&(Schedule::GetMainFiber()->m_ctx),&m_ctx)) {
+            if(swapcontext(&(Scheduler::GetMainFiber()->m_ctx),&m_ctx)) {
                 SYLAR_ASSERT2(false, "swapcontext");
             }
         } else {

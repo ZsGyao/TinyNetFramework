@@ -156,19 +156,19 @@ CMakeFiles/sylar.dir/sylar/fiber.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sylar.dir/sylar/fiber.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgys/workspace/sylar/sylar/fiber.cc -o CMakeFiles/sylar.dir/sylar/fiber.cc.s
 
-CMakeFiles/sylar.dir/sylar/schedule.cc.o: CMakeFiles/sylar.dir/flags.make
-CMakeFiles/sylar.dir/sylar/schedule.cc.o: ../sylar/schedule.cc
-CMakeFiles/sylar.dir/sylar/schedule.cc.o: CMakeFiles/sylar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgys/workspace/sylar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sylar.dir/sylar/schedule.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/schedule.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sylar.dir/sylar/schedule.cc.o -MF CMakeFiles/sylar.dir/sylar/schedule.cc.o.d -o CMakeFiles/sylar.dir/sylar/schedule.cc.o -c /home/zgys/workspace/sylar/sylar/schedule.cc
+CMakeFiles/sylar.dir/sylar/scheduler.cc.o: CMakeFiles/sylar.dir/flags.make
+CMakeFiles/sylar.dir/sylar/scheduler.cc.o: ../sylar/scheduler.cc
+CMakeFiles/sylar.dir/sylar/scheduler.cc.o: CMakeFiles/sylar.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgys/workspace/sylar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sylar.dir/sylar/scheduler.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/scheduler.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sylar.dir/sylar/scheduler.cc.o -MF CMakeFiles/sylar.dir/sylar/scheduler.cc.o.d -o CMakeFiles/sylar.dir/sylar/scheduler.cc.o -c /home/zgys/workspace/sylar/sylar/scheduler.cc
 
-CMakeFiles/sylar.dir/sylar/schedule.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sylar.dir/sylar/schedule.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/schedule.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgys/workspace/sylar/sylar/schedule.cc > CMakeFiles/sylar.dir/sylar/schedule.cc.i
+CMakeFiles/sylar.dir/sylar/scheduler.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sylar.dir/sylar/scheduler.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/scheduler.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgys/workspace/sylar/sylar/scheduler.cc > CMakeFiles/sylar.dir/sylar/scheduler.cc.i
 
-CMakeFiles/sylar.dir/sylar/schedule.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sylar.dir/sylar/schedule.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/schedule.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgys/workspace/sylar/sylar/schedule.cc -o CMakeFiles/sylar.dir/sylar/schedule.cc.s
+CMakeFiles/sylar.dir/sylar/scheduler.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sylar.dir/sylar/scheduler.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"sylar/scheduler.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgys/workspace/sylar/sylar/scheduler.cc -o CMakeFiles/sylar.dir/sylar/scheduler.cc.s
 
 # Object files for target sylar
 sylar_OBJECTS = \
@@ -178,7 +178,7 @@ sylar_OBJECTS = \
 "CMakeFiles/sylar.dir/sylar/thread.cc.o" \
 "CMakeFiles/sylar.dir/sylar/mutex.cc.o" \
 "CMakeFiles/sylar.dir/sylar/fiber.cc.o" \
-"CMakeFiles/sylar.dir/sylar/schedule.cc.o"
+"CMakeFiles/sylar.dir/sylar/scheduler.cc.o"
 
 # External object files for target sylar
 sylar_EXTERNAL_OBJECTS =
@@ -189,7 +189,7 @@ sylar_EXTERNAL_OBJECTS =
 ../lib/libsylar.so: CMakeFiles/sylar.dir/sylar/thread.cc.o
 ../lib/libsylar.so: CMakeFiles/sylar.dir/sylar/mutex.cc.o
 ../lib/libsylar.so: CMakeFiles/sylar.dir/sylar/fiber.cc.o
-../lib/libsylar.so: CMakeFiles/sylar.dir/sylar/schedule.cc.o
+../lib/libsylar.so: CMakeFiles/sylar.dir/sylar/scheduler.cc.o
 ../lib/libsylar.so: CMakeFiles/sylar.dir/build.make
 ../lib/libsylar.so: CMakeFiles/sylar.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgys/workspace/sylar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX shared library ../lib/libsylar.so"

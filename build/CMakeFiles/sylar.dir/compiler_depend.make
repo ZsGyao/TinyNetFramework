@@ -1818,7 +1818,7 @@ CMakeFiles/sylar.dir/sylar/fiber.cc.o: ../sylar/fiber.cc \
   /usr/include/x86_64-linux-gnu/bits/syscall.h \
   ../sylar/singleton.h \
   ../sylar/macro.h \
-  ../sylar/schedule.h
+  ../sylar/scheduler.h
 
 CMakeFiles/sylar.dir/sylar/log.cc.o: ../sylar/log.cc \
   /usr/include/stdc-predef.h \
@@ -2941,7 +2941,7 @@ CMakeFiles/sylar.dir/sylar/mutex.cc.o: ../sylar/mutex.cc \
   /usr/include/c++/11/bits/list.tcc \
   ../sylar/noncopyable.h
 
-CMakeFiles/sylar.dir/sylar/schedule.cc.o: ../sylar/schedule.cc \
+CMakeFiles/sylar.dir/sylar/scheduler.cc.o: ../sylar/scheduler.cc \
   /usr/include/stdc-predef.h \
   ../sylar/log.h \
   /usr/include/c++/11/string \
@@ -3198,7 +3198,7 @@ CMakeFiles/sylar.dir/sylar/schedule.cc.o: ../sylar/schedule.cc \
   /usr/include/x86_64-linux-gnu/bits/semaphore.h \
   /usr/include/c++/11/atomic \
   ../sylar/noncopyable.h \
-  ../sylar/schedule.h \
+  ../sylar/scheduler.h \
   ../sylar/fiber.h \
   /usr/include/ucontext.h \
   /usr/include/x86_64-linux-gnu/bits/indirect-return.h \
@@ -3738,6 +3738,8 @@ CMakeFiles/sylar.dir/sylar/util.cc.o: ../sylar/util.cc \
 
 ../sylar/util.cc:
 
+../sylar/scheduler.cc:
+
 ../sylar/mutex.cc:
 
 /usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
@@ -3915,8 +3917,6 @@ CMakeFiles/sylar.dir/sylar/util.cc.o: ../sylar/util.cc \
 /usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector20.hpp:
 
 /usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector10.hpp:
-
-../sylar/schedule.cc:
 
 /usr/include/boost/mpl/vector/aux_/begin_end.hpp:
 
@@ -4139,8 +4139,6 @@ CMakeFiles/sylar.dir/sylar/util.cc.o: ../sylar/util.cc \
 /usr/include/boost/type_traits/has_left_shift.hpp:
 
 /usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_long_long.hpp:
-
-../sylar/schedule.h:
 
 /usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_common.hpp:
 
@@ -4749,6 +4747,8 @@ CMakeFiles/sylar.dir/sylar/util.cc.o: ../sylar/util.cc \
 /usr/include/boost/type_traits/is_class.hpp:
 
 /usr/include/c++/11/bits/stl_raw_storage_iter.h:
+
+../sylar/scheduler.h:
 
 /usr/include/boost/mpl/aux_/config/workaround.hpp:
 

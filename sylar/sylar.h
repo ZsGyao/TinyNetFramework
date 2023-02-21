@@ -13,6 +13,7 @@
 #include "sylar/mutex.h"
 #include "sylar/macro.h"
 #include "sylar/fiber.h"
+#include "sylar/scheduler.h"
 
 
 #endif //SYLAR_SYLAR_H

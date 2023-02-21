@@ -909,4 +909,6 @@ CMakeFiles/test_thread.dir/tests/test_thread.cc.o
  /usr/include/x86_64-linux-gnu/bits/indirect-return.h
  /usr/include/x86_64-linux-gnu/sys/ucontext.h
  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
+ /home/zgys/workspace/sylar/sylar/scheduler.h
+ /home/zgys/workspace/sylar/sylar/fiber.h
 

@@ -797,4 +797,6 @@ CMakeFiles/test_util.dir/tests/test_util.cc.o: \
  /home/zgys/workspace/sylar/./sylar/fiber.h /usr/include/ucontext.h \
  /usr/include/x86_64-linux-gnu/bits/indirect-return.h \
  /usr/include/x86_64-linux-gnu/sys/ucontext.h \
- /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
+ /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
+ /home/zgys/workspace/sylar/./sylar/scheduler.h \
+ /home/zgys/workspace/sylar/./sylar/fiber.h

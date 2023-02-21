@@ -1820,7 +1820,7 @@ CMakeFiles/sylar.dir/sylar/fiber.cc.o
  /usr/include/x86_64-linux-gnu/bits/syscall.h
  /home/zgys/workspace/sylar/sylar/singleton.h
  /home/zgys/workspace/sylar/sylar/macro.h
- /home/zgys/workspace/sylar/sylar/schedule.h
+ /home/zgys/workspace/sylar/sylar/scheduler.h
 
 CMakeFiles/sylar.dir/sylar/log.cc.o
  /home/zgys/workspace/sylar/sylar/log.cc
@@ -2945,8 +2945,8 @@ CMakeFiles/sylar.dir/sylar/mutex.cc.o
  /usr/include/c++/11/bits/list.tcc
  /home/zgys/workspace/sylar/sylar/noncopyable.h
 
-CMakeFiles/sylar.dir/sylar/schedule.cc.o
- /home/zgys/workspace/sylar/sylar/schedule.cc
+CMakeFiles/sylar.dir/sylar/scheduler.cc.o
+ /home/zgys/workspace/sylar/sylar/scheduler.cc
  /usr/include/stdc-predef.h
  /home/zgys/workspace/sylar/sylar/log.h
  /usr/include/c++/11/string
@@ -3203,7 +3203,7 @@ CMakeFiles/sylar.dir/sylar/schedule.cc.o
  /usr/include/x86_64-linux-gnu/bits/semaphore.h
  /usr/include/c++/11/atomic
  /home/zgys/workspace/sylar/sylar/noncopyable.h
- /home/zgys/workspace/sylar/sylar/schedule.h
+ /home/zgys/workspace/sylar/sylar/scheduler.h
  /home/zgys/workspace/sylar/sylar/fiber.h
  /usr/include/ucontext.h
  /usr/include/x86_64-linux-gnu/bits/indirect-return.h

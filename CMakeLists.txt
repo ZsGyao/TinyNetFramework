@@ -20,7 +20,9 @@ set(LIB_SRC
         sylar/noncopyable.h
         sylar/macro.h
         sylar/fiber.h
-        sylar/fiber.cc sylar/schedule.h sylar/schedule.cc)
+        sylar/fiber.cc
+        sylar/scheduler.h
+        sylar/scheduler.cc)
 
 set(LIB_LIB
         sylar

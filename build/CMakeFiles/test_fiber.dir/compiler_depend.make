@@ -907,7 +907,9 @@ CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o: ../tests/test_fiber.cc \
   /usr/include/ucontext.h \
   /usr/include/x86_64-linux-gnu/bits/indirect-return.h \
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \
-  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
+  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
+  ../sylar/scheduler.h \
+  ../sylar/fiber.h
 
 
 /usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
@@ -1823,6 +1825,8 @@ CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o: ../tests/test_fiber.cc \
 /usr/include/boost/mpl/aux_/config/use_preprocessed.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/gthr.h:
+
+../sylar/scheduler.h:
 
 /usr/include/boost/mpl/aux_/config/workaround.hpp:
 
