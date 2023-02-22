@@ -80,10 +80,10 @@ int main() {
      * 只使用main函数线程进行协程调度，相当于先攒下一波协程，然后切换到调度器的run方法将这些协程
      * 消耗掉，然后再返回main函数往下执行
      */
-    sylar::Scheduler sc;
+    //sylar::Scheduler sc;
 
     // 额外创建新的线程进行调度，那只要添加了调度任务，调度器马上就可以调度该任务
-    //sylar::Scheduler sc(3, false);
+    sylar::Scheduler sc(3, false);
 
     // 添加调度任务，使用函数作为调度对象
     sc.schedule(test_fiber1);

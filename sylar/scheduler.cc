@@ -34,6 +34,8 @@ namespace sylar {
              * 在user caller情况下，把caller线程的主协程暂时保存起来，等调度协程结束时，再resume caller协程
              */
             /// tips,这里在将调度器所在协程(主协程)绑定run方法构造时，不受调度器调度，否则fiber的析构会出问题
+            /// 由于use caller，此线程要被放入线程池，所以要创建一个运行run方法的协程调度器(主协程)，用m_rootFiber指向它，主协程是没有栈的，
+            /// 用的就是线程的栈，stacksize = 0， 不在调度器中跑，它自己就在调度别的协程
             m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run, this), 0, false));
 
             sylar::Thread::SetName(m_name);  // 将线程名设置为协程名
