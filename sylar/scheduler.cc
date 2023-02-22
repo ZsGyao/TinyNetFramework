@@ -33,7 +33,8 @@ namespace sylar {
              * caller线程的主协程不会被线程的调度协程run进行调度，而且，线程的调度协程停止时，应该返回caller线程的主协程
              * 在user caller情况下，把caller线程的主协程暂时保存起来，等调度协程结束时，再resume caller协程
              */
-            m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run, this)));
+            /// tips,这里在将调度器所在协程(主协程)绑定run方法构造时，不受调度器调度，否则fiber的析构会出问题
+            m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run, this), 0, false));
 
             sylar::Thread::SetName(m_name);  // 将线程名设置为协程名
             t_scheduler_fiber = m_rootFiber.get(); // 将调度器协程保存起来
@@ -83,7 +84,7 @@ namespace sylar {
     }
 
     void Scheduler::stop() {
-        SYLAR_LOG_INFO(g_logger) << this << "stop";
+        SYLAR_LOG_INFO(g_logger) << this << " stop";
         if(stopping()) {
             return;
         }
@@ -96,7 +97,7 @@ namespace sylar {
             SYLAR_ASSERT(GetThis() != this);
         }
 
-        // 通知所有线程的协程调度器，有任务了，将任务队列中的任务执行完
+        // 通知所有线程的协程调度器，有任务的，将任务队列中的任务执行完
         for(size_t i = 0; i < m_threadCount; i++) {
             tickle();
         }
@@ -145,6 +146,7 @@ namespace sylar {
     }
 
     void Scheduler::run() {
+        SYLAR_LOG_DEBUG(g_logger) << "run";
         setThis();        //把当前线程的schedule设置为自己
 
         if(sylar::GetThreadId() != m_rootThread) {

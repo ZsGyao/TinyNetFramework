@@ -4,5 +4,6 @@
 /home/zgys/workspace/sylar/build/CMakeFiles/test_thread.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/test_util.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/test_fiber.dir
+/home/zgys/workspace/sylar/build/CMakeFiles/test_scheduler.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/edit_cache.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/rebuild_cache.dir
