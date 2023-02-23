@@ -33,7 +33,11 @@ namespace sylar {
          * @param manager
          */
         Timer(uint64_t ms, std::function<void()> cb, bool recurring, TimerManager* manager);
-        Timer(uint64_t next);
+        explicit Timer(uint64_t next);
+
+        bool cancel();
+        bool refresh();
+        bool reset(uint64_t ms, bool from_now);
     private:
         bool                  m_recurring = false;        // 是否循环定时器
         uint64_t              m_ms = 0;                   // 执行周期
@@ -86,16 +90,20 @@ namespace sylar {
          */
         uint64_t getNextTimer();
 
-        void listExpiredCb(std::vector<Timer::ptr>& cbs);
+        void listExpiredCb(std::vector<std::function<void()> >& cbs);
     protected:
         /**
          * @brief 当有新的定时器插入到定时器的首部,执行该函数
          */
         virtual void onTimerInsertedAtFront() = 0;
-
+        Timer::ptr addTimer(Timer::ptr timer, RWMutexType::WriteLock& lock);
     private:
-        RWMutexType m_mutex;
+        bool detectClockRollover(uint64_t now_ms);
+    private:
+        RWMutexType                             m_mutex;
         std::set<Timer::ptr, Timer::Comparator> m_timers;
+        bool                                    m_tickled = false;
+        uint64_t                                m_previousTime = 0;
     };
 }
 
