@@ -24,7 +24,7 @@ namespace sylar {
         enum Event {
             NONE  = 0x0,   // 无事件
             READ  = 0x1,   // 读事件(EPOLLIN)
-            WRITE = 0x2    // 写事件(EPOLLOUT)
+            WRITE = 0x4    // 写事件(EPOLLOUT)
         };
 
     private:
@@ -51,7 +51,8 @@ namespace sylar {
              * @return 返回对应事件的上下文
              */
             EventContext& getEventContext(Event event);
-            EventContext& resetEventContext(EventContext& event_ctx);
+            void resetEventContext(EventContext& event_ctx);
+            void triggerEvent(Event event);
 
             EventContext read;                 // 读事件上下文
             EventContext write;                // 写事件上下文
@@ -125,6 +126,13 @@ namespace sylar {
          * @return 是否可以停止
          */
         bool stopping() override;
+
+        /**
+         * @brief 判断是否可以停止，同时获取最近一个定时器的超时时间
+         * @param[out] timeout 最近一个定时器的超时时间，用于idle协程的epoll_wait
+         * @return 返回是否可以停止
+         */
+        bool stopping(uint64_t& timeout);
 
         /**
          * @brief idle协程

@@ -22,7 +22,7 @@ set(LIB_SRC
         sylar/fiber.h
         sylar/fiber.cc
         sylar/scheduler.h
-        sylar/scheduler.cc sylar/iomanager.h sylar/iomanager.cc)
+        sylar/scheduler.cc sylar/iomanager.h sylar/iomanager.cc sylar/timer.h sylar/timer.cc)
 
 set(LIB_LIB
         sylar
