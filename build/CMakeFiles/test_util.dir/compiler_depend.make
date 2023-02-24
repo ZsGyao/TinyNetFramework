@@ -909,8 +909,14 @@ CMakeFiles/test_util.dir/tests/test_util.cc.o: ../tests/test_util.cc \
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \
   /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
   ../sylar/scheduler.h \
-  ../sylar/fiber.h
+  ../sylar/fiber.h \
+  ../sylar/iomanager.h \
+  ../sylar/scheduler.h \
+  ../sylar/timer.h \
+  ../sylar/timer.h
 
+
+../sylar/timer.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
 
@@ -1385,6 +1391,8 @@ CMakeFiles/test_util.dir/tests/test_util.cc.o: ../tests/test_util.cc \
 /usr/include/boost/lexical_cast/try_lexical_convert.hpp:
 
 /usr/include/boost/current_function.hpp:
+
+../sylar/iomanager.h:
 
 /usr/include/boost/assert/source_location.hpp:
 

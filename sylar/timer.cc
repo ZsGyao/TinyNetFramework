@@ -9,6 +9,7 @@
   */
 #include "timer.h"
 #include "util.h"
+#include "macro.h"
 
 namespace sylar {
     bool Timer::Comparator::operator()(const Timer::ptr& lhs, const Timer::ptr& rhs) const {
@@ -104,9 +105,9 @@ namespace sylar {
         return timer;
     }
 
-    Timer::ptr TimerManager::addTimer(Timer::ptr timer, RWMutexType::WriteLock& lock) {
+    void TimerManager::addTimer(Timer::ptr timer, RWMutexType::WriteLock& lock) {
         auto it = m_timers.insert(timer).first;
-        bool at_front = (it == m_timers.begin() && !m_tickled);
+        bool at_front = (it == m_timers.begin()) && !m_tickled;
         if(at_front) {
             m_tickled = true;
         }
@@ -140,7 +141,7 @@ namespace sylar {
         if(now_ms > next->m_next) {
             return 0;
         } else {
-            return next->m_next;
+            return next->m_next - now_ms;
         }
     }
 
@@ -155,7 +156,14 @@ namespace sylar {
         }
         RWMutexType::WriteLock lock(m_mutex);
 
-        bool rollover = detectClockRollover(now_ms);
+        if(m_timers.empty()) {
+            return;
+        }
+        bool rollover = false;
+        if(SYLAR_UNLIKELY(detectClockRollover(now_ms))) {
+            // 使用clock_gettime(CLOCK_MONOTONIC_RAW)，应该不可能出现时间回退的问题
+            rollover = true;
+        }
         if(!rollover && ((*m_timers.begin())->m_next > now_ms)) {
             return;
         }
@@ -190,5 +198,10 @@ namespace sylar {
         }
         m_previousTime = now_ms;
         return rollover;
+    }
+
+    bool TimerManager::hasTimer() {
+        RWMutexType::ReadLock lock(m_mutex);
+        return !m_timers.empty();
     }
 }

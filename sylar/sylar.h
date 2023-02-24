@@ -14,6 +14,8 @@
 #include "sylar/macro.h"
 #include "sylar/fiber.h"
 #include "sylar/scheduler.h"
+#include "sylar/iomanager.h"
+#include "sylar/timer.h"
 
 
 #endif //SYLAR_SYLAR_H

@@ -11,9 +11,10 @@
 #define __SYLAR_IOMANAGER_H__
 
 #include "scheduler.h"
+#include "timer.h"
 
 namespace sylar {
-    class IOManager : public Scheduler {
+    class IOManager : public Scheduler, public TimerManager {
     public:
         typedef std::shared_ptr<IOManager> ptr;
         typedef RWMutex RWMutexType;
@@ -39,8 +40,8 @@ namespace sylar {
              * @details fd的每个事件都有一个事件上下文，保存这个事件的回调函数以及执行回调函数的调度器
              *          sylar对fd事件做了简化，只预留了读事件和写事件，所有的事件都被归类到这两类事件中
              */
-            struct  EventContext {
-                Scheduler*            scheduler = nullptr;  // 事件执行的scheduler
+            struct EventContext {
+                Scheduler*            scheduler = nullptr;  // 执行事件回调的调度器
                 Fiber::ptr            fiber;                // 事件协程
                 std::function<void()> cb;                   // 事件的回调函数
             };
@@ -51,7 +52,18 @@ namespace sylar {
              * @return 返回对应事件的上下文
              */
             EventContext& getEventContext(Event event);
+
+            /**
+             * @brief 重置事件上下文
+             * @param[in, out] event_ctx 待重置的事件上下文对象
+             */
             void resetEventContext(EventContext& event_ctx);
+
+            /**
+             * @brief 触发事件
+             * @details 根据事件类型调用对应上下文结构中的调度器去调度回调协程或回调函数
+             * @param[in] event 事件类型
+             */
             void triggerEvent(Event event);
 
             EventContext read;                 // 读事件上下文
@@ -86,8 +98,9 @@ namespace sylar {
 
         /**
          * @brief 删除事件
-         * @param fd 句柄
+         * @param fd socket 句柄
          * @param event 事件
+         * @attention 不会触发事件
          * @return 是否删除成功
          */
         bool delEvent(int fd, Event event);
@@ -140,6 +153,11 @@ namespace sylar {
          *          idle退出的时机是epoll_wait返回，对应的操作是tickle或注册的IO事件发生
          */
         void idle() override;
+
+        /**
+         * @brief 当有定时器插入到头部时，要重新更新epoll_wait的超时时间，这里是唤醒idle协程以便于使用新的超时时间
+         */
+        void onTimerInsertedAtFront() override;
 
         /**
          * @brief 重置socket句柄上下文的容器大小

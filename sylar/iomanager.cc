@@ -19,6 +19,53 @@
 namespace sylar {
     static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
 
+    enum EpollCtlOp {
+    };
+
+    static std::ostream& operator<<(std::ostream &os, const EpollCtlOp &op) {
+        switch ((int)op) {
+#define XX(ctl) \
+    case ctl:   \
+        return os << #ctl;
+            XX(EPOLL_CTL_ADD);
+            XX(EPOLL_CTL_MOD);
+            XX(EPOLL_CTL_DEL);
+#undef XX
+            default:
+                return os << (int)op;
+        }
+    }
+
+    static std::ostream &operator<<(std::ostream &os, EPOLL_EVENTS events) {
+        if (!events) {
+            return os << "0";
+        }
+        bool first = true;
+#define XX(E)          \
+    if (events & E) {  \
+        if (!first) {  \
+            os << "|"; \
+        }              \
+        os << #E;      \
+        first = false; \
+    }
+        XX(EPOLLIN);
+        XX(EPOLLPRI);
+        XX(EPOLLOUT);
+        XX(EPOLLRDNORM);
+        XX(EPOLLRDBAND);
+        XX(EPOLLWRNORM);
+        XX(EPOLLWRBAND);
+        XX(EPOLLMSG);
+        XX(EPOLLERR);
+        XX(EPOLLHUP);
+        XX(EPOLLRDHUP);
+        XX(EPOLLONESHOT);
+        XX(EPOLLET);
+#undef XX
+        return os;
+    }
+
     IOManager::IOManager(size_t threads, bool use_caller, const std::string& name)
             : Scheduler(threads, use_caller, name) {
         m_epfd = epoll_create(5000);
@@ -53,8 +100,10 @@ namespace sylar {
         close(m_tickleFds[0]);
         close(m_tickleFds[1]);
 
-        for(auto fd_ctx : m_fdContexts) { // range for
-                delete fd_ctx;
+        for (size_t i = 0; i < m_fdContexts.size(); ++i) {
+            if (m_fdContexts[i]) {
+                delete m_fdContexts[i];
+            }
         }
     }
 
@@ -64,7 +113,7 @@ namespace sylar {
         for(size_t i = 0; i < m_fdContexts.size(); i++) {
             if(!m_fdContexts[i]) {
                 m_fdContexts[i] = new FdContext;
-                m_fdContexts[i]->fd = (int)i;
+                m_fdContexts[i]->fd = i;
             }
         }
     }
@@ -88,21 +137,27 @@ namespace sylar {
     }
 
     void IOManager::FdContext::triggerEvent(IOManager::Event event) {
+        // 待触发的事件必须已被注册过
         SYLAR_ASSERT(events & event);
+        /**
+         *  清除该事件，表示不再关注该事件了
+         * 也就是说，注册的IO事件是一次性的，如果想持续关注某个socket fd的读写事件，那么每次触发事件之后都要重新添加
+         */
         events = (Event)(events & ~event);
+        // 调度对应的协程
         EventContext& ctx = getEventContext(event);
         if (ctx.cb) {
-            ctx.scheduler->schedule(&ctx.cb);
+            ctx.scheduler->schedule(ctx.cb);
         } else {
-           ctx.scheduler->schedule(&ctx.fiber);
+           ctx.scheduler->schedule(ctx.fiber);
         }
-        ctx.scheduler = nullptr;
+        resetEventContext(ctx);
         return;
     }
 
     int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
         // 找到fd对应的FdContext，如果不存在，那就分配一个
-        FdContext *fd_ctx = nullptr;
+        FdContext* fd_ctx = nullptr;
         RWMutexType::ReadLock lock(m_mutex);
         if((int)m_fdContexts.size() > fd) {    // 说明fd存在
             fd_ctx = m_fdContexts[fd];
@@ -110,16 +165,16 @@ namespace sylar {
         } else {
             lock.unlock();
             RWMutexType::WriteLock lock2(m_mutex);
-            contextResize((size_t)(fd * 1.5)); // 1.5倍扩容
+            contextResize(fd * 1.5); // 1.5倍扩容
             fd_ctx = m_fdContexts[fd];
         }
         // 运行到此处，此fd对应的上下文由fd_ctx指向
         // 同一个fd不允许重复添加相同的事件
         FdContext::MutexType::Lock lock2(fd_ctx->mutex);   // 对fd的上下文结构修改，加FdContext中的互斥锁
-        if(fd_ctx->events & event) {                         // 事件重复添加，断言
+        if(SYLAR_UNLIKELY(fd_ctx->events & event)) {                         // 事件重复添加，断言
             SYLAR_LOG_ERROR(g_logger) << "addEvent assert fd=" << fd
-                                      << " event=" << event
-                                      << " fd_ctx.event=" << fd_ctx->events;
+                                      << " event=" << (EPOLL_EVENTS)event
+                                      << " fd_ctx.event=" << (EPOLL_EVENTS)fd_ctx->events;
             SYLAR_ASSERT(!(fd_ctx->events & event));
         }
 
@@ -133,7 +188,7 @@ namespace sylar {
         int rt = epoll_ctl(m_epfd, op, fd, &epevent);
         if (rt) {
             SYLAR_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
-                                      << op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
+                                      << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
                                       << rt << " (" << errno << ") (" << strerror(errno) << ") fd_ctx->events="
                                       << (EPOLL_EVENTS)fd_ctx->events;
             return -1;
@@ -168,7 +223,7 @@ namespace sylar {
         lock.unlock();
 
         FdContext::MutexType::Lock lock2(fd_ctx->mutex);
-        if(!(fd_ctx->events & event)) { // 如果这个fd并没有添加这个事件
+        if(SYLAR_UNLIKELY(!(fd_ctx->events & event))) { // 如果这个fd并没有添加这个事件
             return false;
         }
 
@@ -183,7 +238,7 @@ namespace sylar {
         int rt = epoll_ctl(m_epfd, op, fd, &epevent);
         if(rt) {
             SYLAR_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
-                                      << op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
+                                      << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
                                       << rt << " (" << errno << ") (" << strerror(rt) << ")";
             return false;
         }
@@ -191,8 +246,8 @@ namespace sylar {
         // 待执行事件数减1
         --m_pendingEventCount;
         // 重置该fd对应的event事件上下文
-        fd_ctx->events = new_events;
-        fd_ctx->resetEventContext(fd_ctx->getEventContext(event));
+        FdContext::EventContext &event_ctx = fd_ctx->getEventContext(event);
+        fd_ctx->resetEventContext(event_ctx);
         return true;
     }
 
@@ -206,13 +261,13 @@ namespace sylar {
         lock.unlock();
 
         FdContext::MutexType::Lock lock2(fd_ctx->mutex);
-        if(!(fd_ctx->events & event)) {
+        if(SYLAR_UNLIKELY(!(fd_ctx->events & event))) {
             return false;
         }
 
         //删除事件
         Event new_events = (Event)(fd_ctx->events & ~event);
-        int op           = new_events ? EPOLL_CTL_MOD : EPOLL_CTL_MOD;
+        int op           = new_events ? EPOLL_CTL_MOD : EPOLL_CTL_DEL;
         epoll_event epevent;
         epevent.events   = EPOLLET | new_events;
         epevent.data.ptr = fd_ctx;
@@ -220,7 +275,7 @@ namespace sylar {
         int rt = epoll_ctl(m_epfd, op, fd, & epevent);
         if(rt) {
             SYLAR_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
-                                      << op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
+                                      << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
                                       << rt << " (" << errno << ") (" << strerror(errno) << ")";
             return false;
         }
@@ -255,7 +310,7 @@ namespace sylar {
         int rt = epoll_ctl(m_epfd, op, fd, &epevent);
         if(rt) {
             SYLAR_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
-                                      << op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
+                                      << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
                                       << rt << " (" << errno << ") (" << strerror(errno) << ")";
             return false;
         }
@@ -300,7 +355,7 @@ namespace sylar {
     bool IOManager::stopping(uint64_t &timeout) {
         // 对于IOManager而言，必须等所有待调度的IO事件都执行完了才可以退出
         // 增加定时器功能后，还应该保证没有剩余的定时器待触发
-        //timeout = getNextTimer();
+        timeout = getNextTimer();
         return timeout == ~0ull && m_pendingEventCount == 0 && Scheduler::stopping();
     }
 
@@ -313,8 +368,8 @@ namespace sylar {
         SYLAR_LOG_DEBUG(g_logger) << "IOManager idle";
 
         // 一次epoll_wait最多检测256个就绪事件，如果就绪事件超过了这个数，那么会在下轮epoll_wati继续处理
-        const uint64_t MAX_EVNETS = 256;
-        epoll_event* events = new epoll_event[MAX_EVNETS]();
+        const uint64_t MAX_EVENTS = 256;
+        epoll_event* events = new epoll_event[MAX_EVENTS]();
         std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr){
             delete[] ptr;
         });
@@ -322,7 +377,7 @@ namespace sylar {
         while (true) {
             // 获取下一个定时器的超时时间，顺便判断调度器是否停止
             uint64_t next_timeout = 0;
-            if( stopping(next_timeout)) {
+            if( SYLAR_UNLIKELY(stopping(next_timeout))) {
                 SYLAR_LOG_DEBUG(g_logger) << "name=" << getName() << "idle stopping exit";
                 break;
             }
@@ -338,7 +393,7 @@ namespace sylar {
                     next_timeout = MAX_TIMEOUT;
                 }
                 // rt 返回事件个数
-                rt = epoll_wait(m_epfd, events, MAX_EVNETS, (int)next_timeout);
+                rt = epoll_wait(m_epfd, events, MAX_EVENTS, (int)next_timeout);
                 if(rt < 0 && errno == EINTR) {
                     continue;
                 } else {
@@ -348,9 +403,9 @@ namespace sylar {
 
             // 收集所有已超时的定时器，执行回调函数
             std::vector<std::function<void()> > cbs;
-            //listExpiredCb(cbs);
+            listExpiredCb(cbs);
             if(!cbs.empty()) {
-                for(const auto &cb : cbs) {
+                for(const auto& cb : cbs) {
                     schedule(cb);
                 }
                 cbs.clear();
@@ -358,13 +413,13 @@ namespace sylar {
 
             // 遍历所有发生的事件，根据epoll_event的私有指针找到对应的FdContext，进行事件处理
             for (int i = 0; i < rt; ++i) {
-                epoll_event &event = events[i];
+                epoll_event& event = events[i];
                 if (event.data.fd == m_tickleFds[0]) {
                     // ticklefd[0]用于通知协程调度，这时只需要把管道里的内容读完即可
                     uint8_t dummy[256];
-                    while (read(m_tickleFds[0], dummy, sizeof(dummy)) > 0) {
+                    while (read(m_tickleFds[0], dummy, sizeof(dummy)) > 0){};
                         continue;
-                    }
+
                 }
 
                 FdContext* fd_ctx = (FdContext* )event.data.ptr;
@@ -397,7 +452,7 @@ namespace sylar {
                 int rt2 = epoll_ctl(m_epfd, op, fd_ctx->fd, &event);
                 if (rt2) {
                     SYLAR_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
-                                              << op << ", " << fd_ctx->fd << ", " << (EPOLL_EVENTS)event.events << "):"
+                                              << (EpollCtlOp)op << ", " << fd_ctx->fd << ", " << (EPOLL_EVENTS)event.events << "):"
                                               << rt2 << " (" << errno << ") (" << strerror(errno) << ")";
                     continue;
                 }
@@ -423,5 +478,9 @@ namespace sylar {
 
             raw_ptr->yield();
         } // end while(true)
+    }
+
+    void IOManager::onTimerInsertedAtFront() {
+        tickle();
     }
 }

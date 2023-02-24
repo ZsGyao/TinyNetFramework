@@ -799,4 +799,8 @@ CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o: \
  /usr/include/x86_64-linux-gnu/sys/ucontext.h \
  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
  /home/zgys/workspace/sylar/./sylar/scheduler.h \
- /home/zgys/workspace/sylar/./sylar/fiber.h
+ /home/zgys/workspace/sylar/./sylar/fiber.h \
+ /home/zgys/workspace/sylar/./sylar/iomanager.h \
+ /home/zgys/workspace/sylar/./sylar/scheduler.h \
+ /home/zgys/workspace/sylar/./sylar/timer.h \
+ /home/zgys/workspace/sylar/./sylar/timer.h

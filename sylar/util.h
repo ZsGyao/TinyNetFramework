@@ -25,7 +25,7 @@ namespace sylar{
     //时间ms
     uint64_t GetCurrentMS();
     uint64_t GetCurrentUS();
-}
+
 }
 
 #endif //SYLAR_UTIL_H
