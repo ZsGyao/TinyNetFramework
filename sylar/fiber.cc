@@ -76,8 +76,8 @@ namespace sylar {
     }
 
     Fiber::~Fiber(){
-        SYLAR_LOG_DEBUG(g_logger) << "Fiber::~Fiber start id=" << m_id
-                                  << " total=" << s_fiber_count;
+//        SYLAR_LOG_DEBUG(g_logger) << "Fiber::~Fiber start id=" << m_id
+//                                  << " total=" << s_fiber_count;
 
         --s_fiber_count;
         if(m_stack) {                           // 有栈，说明是子协程，需要确保子协程一定是结束状态
@@ -94,7 +94,7 @@ namespace sylar {
             }
         }
 
-        SYLAR_LOG_DEBUG(g_logger) << "Fiber::~Fiber finish id=" << m_id
+        SYLAR_LOG_DEBUG(g_logger) << "Fiber::~Fiber id=" << m_id
                                   << " total=" << s_fiber_count;
     }
 

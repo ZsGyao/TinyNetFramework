@@ -7,5 +7,6 @@
 /home/zgys/workspace/sylar/build/CMakeFiles/test_scheduler.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/test_iomanager.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/test_timer.dir
+/home/zgys/workspace/sylar/build/CMakeFiles/test_hook.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/edit_cache.dir
 /home/zgys/workspace/sylar/build/CMakeFiles/rebuild_cache.dir

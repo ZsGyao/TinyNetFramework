@@ -22,10 +22,19 @@ set(LIB_SRC
         sylar/fiber.h
         sylar/fiber.cc
         sylar/scheduler.h
-        sylar/scheduler.cc sylar/iomanager.h sylar/iomanager.cc sylar/timer.h sylar/timer.cc)
+        sylar/scheduler.cc
+        sylar/iomanager.h
+        sylar/iomanager.cc
+        sylar/timer.h
+        sylar/timer.cc
+        sylar/hook.h
+        sylar/hook.cc
+        sylar/fdmanager.h
+        sylar/fdmanager.cc)
 
 set(LIB_LIB
         sylar
+        dl
         pthread
         yaml-cpp
         )
@@ -74,6 +83,11 @@ add_executable(test_timer tests/test_timer.cc)
 add_dependencies(test_timer sylar)
 force_redefine_file_macro_for_sources(test_timer)  #__FILE__
 target_link_libraries(test_timer sylar ${LIB_LIB})
+
+add_executable(test_hook tests/test_hook.cc)
+add_dependencies(test_hook sylar)
+force_redefine_file_macro_for_sources(test_hook)  #__FILE__
+target_link_libraries(test_hook sylar ${LIB_LIB})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

@@ -4,6 +4,7 @@
 #include "log.h"
 #include "scheduler.h"
 #include "macro.h"
+#include "hook.h"
 
 namespace sylar {
 
@@ -149,6 +150,7 @@ namespace sylar {
 
     void Scheduler::run() {
         SYLAR_LOG_DEBUG(g_logger) << "run";
+        set_hook_enable(false);
         setThis();        //把当前线程的schedule设置为自己
 
         if(sylar::GetThreadId() != m_rootThread) {
@@ -162,7 +164,7 @@ namespace sylar {
         ScheduleTask task;            // 创建一个任务
         while(true) {
             task.reset();             // 清空此任务
-            bool tickle_me = false;   // 是否tickle其他线程进行任务调度
+            bool tickle_me = true;   // 是否tickle其他线程进行任务调度
             {
                 MutexType::Lock lock(m_mutex);
                 auto it = m_tasks.begin();
