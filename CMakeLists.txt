@@ -30,7 +30,7 @@ set(LIB_SRC
         sylar/hook.h
         sylar/hook.cc
         sylar/fdmanager.h
-        sylar/fdmanager.cc)
+        sylar/fdmanager.cc sylar/socket.h sylar/socket.cc sylar/address.h sylar/address.cc sylar/endian.h)
 
 set(LIB_LIB
         sylar

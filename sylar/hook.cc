@@ -95,65 +95,66 @@ struct timer_info {
     int cancelled = 0;
 };
 
-template<typename OriginFun, typename... Args>
+template<typename OriginFun, typename... Args> // 可变参数的args
 static ssize_t do_io(int fd, OriginFun fun, const char *hook_fun_name,
                      uint32_t event, int timeout_so, Args &&... args) {
-    if (!sylar::t_hook_enable) {
+    if (!sylar::t_hook_enable) {    // 判断是否被hook住了，如果没有返回函数原型
         return fun(fd, std::forward<Args>(args)...);
     }
 
     sylar::FdCtx::ptr ctx = sylar::FdMgr::GetInstance()->get(fd);
-    if (!ctx) {
+    if (!ctx) { // 不存在，把认为它不是socket，返回函数原型
         return fun(fd, std::forward<Args>(args)...);
     }
 
-    if (ctx->isClose()) {
+    if (ctx->isClose()) { // 文件关了，返回错误 ERROR BAD FD
         errno = EBADF;
         return -1;
     }
 
-    if (!ctx->isSocket() || ctx->getUserNonblock()) {
-        return fun(fd, std::forward<Args>(args)...);
+    if (!ctx->isSocket() || ctx->getUserNonblock()) { // 是socker，而且已经设置为非阻塞io
+        return fun(fd, std::forward<Args>(args)...); //用forward把参数展开
     }
 
-    uint64_t to = ctx->getTimeout(timeout_so);
-    std::shared_ptr<timer_info> tinfo(new timer_info);
+    // 下面就是hook要做的内容
+    uint64_t to = ctx->getTimeout(timeout_so); // 获取超时的时间
+    std::shared_ptr<timer_info> tinfo(new timer_info); // 设置一个超时的条件
 
     retry:
-    ssize_t n = fun(fd, std::forward<Args>(args)...);
-    while (n == -1 && errno == EINTR) {
+    ssize_t n = fun(fd, std::forward<Args>(args)...); // 如果这个函数原型直接返回了而且返回值是有效的，说明读到数据直接返回
+    while (n == -1 && errno == EINTR) { // 如果是中断，则继续重试
         n = fun(fd, std::forward<Args>(args)...);
     }
-    if (n == -1 && errno == EAGAIN) {
+    if (n == -1 && errno == EAGAIN) {  // EAGAIN 说明被阻塞了，需要异步操作
         sylar::IOManager *iom = sylar::IOManager::GetThis();
         sylar::Timer::ptr timer;
         std::weak_ptr<timer_info> winfo(tinfo);
 
-        if (to != (uint64_t) -1) {
-            timer = iom->addConditionTimer(to, [winfo, fd, iom, event]() {
-                auto t = winfo.lock();
-                if (!t || t->cancelled) {
+        if (to != (uint64_t) -1) { // 说明有超时时间
+            timer = iom->addConditionTimer(to, [winfo, fd, iom, event]() { // 等待它 to 的时间， 如果没来的化，就触发回调
+                auto t = winfo.lock(); // 拿出这个条件，唤醒一下
+                if (!t || t->cancelled) { // 如果有这个条件，并且这个条件没有设错误，直接返回
                     return;
                 }
-                t->cancelled = ETIMEDOUT;
+                t->cancelled = ETIMEDOUT; // 否则设置错误，并取消事件
                 iom->cancelEvent(fd, (sylar::IOManager::Event) (event));
             }, winfo);
         }
 
-        int rt = iom->addEvent(fd, (sylar::IOManager::Event) (event));
-        if (SYLAR_UNLIKELY(rt)) {
+        int rt = iom->addEvent(fd, (sylar::IOManager::Event) (event)); // 添加一个当前协程的事件
+        if (SYLAR_UNLIKELY(rt)) { // 如果添加失败，则取消定时器
             SYLAR_LOG_ERROR(g_logger) << hook_fun_name << " addEvent("
                                       << fd << ", " << event << ")";
-            if (timer) {
+            if (timer) { // 如果有定时器，就把定时器取消掉
                 timer->cancel();
             }
             return -1;
-        } else {
+        } else { // 成功了则让出执行权
             sylar::Fiber::GetThis()->yield();
-            if (timer) {
+            if (timer) { // timer不为nullptr，说明有超时时间，挂起后任务应该被执行了
                 timer->cancel();
             }
-            if (tinfo->cancelled) {
+            if (tinfo->cancelled) { // 超时
                 errno = tinfo->cancelled;
                 return -1;
             }
