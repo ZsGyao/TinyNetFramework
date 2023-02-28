@@ -787,10 +787,8 @@ CMakeFiles/sylar.dir/sylar/fiber.cc.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc \
  /home/zgys/workspace/sylar/sylar/util.h \
- /usr/include/x86_64-linux-gnu/sys/syscall.h \
- /usr/include/x86_64-linux-gnu/asm/unistd.h \
- /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
- /usr/include/x86_64-linux-gnu/bits/syscall.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/c++/11/cxxabi.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/cxxabi_tweaks.h \
  /home/zgys/workspace/sylar/sylar/singleton.h \
  /home/zgys/workspace/sylar/sylar/macro.h \
  /home/zgys/workspace/sylar/sylar/scheduler.h

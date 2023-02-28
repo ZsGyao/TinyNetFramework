@@ -13,7 +13,6 @@ link_directories(/usr/local/lib)
 
 set(LIB_SRC
         sylar/log.cc
-        sylar/util.cc
         sylar/config.cc
         sylar/thread.cc
         sylar/mutex.cc
@@ -30,7 +29,30 @@ set(LIB_SRC
         sylar/hook.h
         sylar/hook.cc
         sylar/fdmanager.h
-        sylar/fdmanager.cc sylar/socket.h sylar/socket.cc sylar/address.h sylar/address.cc sylar/endian.h)
+        sylar/fdmanager.cc
+        sylar/socket.h
+        sylar/socket.cc
+        sylar/address.h
+        sylar/address.cc
+        sylar/endian.h
+        sylar/util.h
+        sylar/util.cc
+        sylar/stream.h
+        sylar/stream.cc
+        sylar/tcp_server.h
+        sylar/tcp_server.cc
+        sylar/uri.h
+        sylar/uri.cc
+        sylar/bytearray.h
+        sylar/bytearray.cc
+        sylar/http/http-parser/http_parser.c
+        sylar/http/http.cc
+        sylar/http/http_connection.cc
+        sylar/http/http_parser.cc
+        sylar/http/http_server.cc
+        sylar/http/http_session.cc
+        sylar/http/servlet.cc
+        sylar/streams/socket_stream.cc)
 
 set(LIB_LIB
         sylar
